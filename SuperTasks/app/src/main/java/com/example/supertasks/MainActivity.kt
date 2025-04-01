@@ -6,10 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -53,7 +52,7 @@ fun addNewTask(name: String, description:String){
 // botão para cadastrar a tarefa, que chamará a função
 
 
-@Preview()
+@Preview
 @Composable
 fun TasksApp() {
     SuperTasksTheme {
@@ -68,12 +67,15 @@ fun TaskForm(modifier: Modifier = Modifier) {
 
     Column (
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(modifier = Modifier.height(64.dp))
+
         TextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Digite o nome da tarefa") }
+            label = { Text("Digite o nome da tarefa") },
+            modifier = Modifier.fillMaxWidth()
             )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -81,12 +83,15 @@ fun TaskForm(modifier: Modifier = Modifier) {
         TextField(
             value = description,
             onValueChange = { description = it },
-            label = { Text("Digite a descrição") }
+            label = { Text("Digite a descrição") },
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        
+        Button(onClick = { addNewTask(name, description) }, modifier = Modifier.fillMaxWidth()){
+            Text(text = "Adicionar")
+        }
     }
 
 }
