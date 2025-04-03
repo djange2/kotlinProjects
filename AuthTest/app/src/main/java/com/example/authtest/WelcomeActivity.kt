@@ -38,7 +38,7 @@ fun Greeting(modifier: Modifier = Modifier) {
         Button(onClick = { Intent(Intent.ACTION_MAIN).also {
             it.`package`="com.example.authtest"
             try {
-                startActivity(it)
+                //startActivity(it)
             } catch (e: ActivityNotFoundException){
                 e.printStackTrace()
             }
@@ -50,7 +50,7 @@ fun Greeting(modifier: Modifier = Modifier) {
         Button(onClick = { Intent(Intent.ACTION_MAIN).also {
             it.`package`="com.example.authtest"
             try {
-                startActivity(it)
+                //startActivity(it)
             } catch (e: ActivityNotFoundException){
                 e.printStackTrace()
             }
