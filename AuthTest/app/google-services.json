@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "978793362359",
+    "project_id": "authtest-747dd",
+    "storage_bucket": "authtest-747dd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978793362359:android:9a483b877d7752ea6aee32",
+        "android_client_info": {
+          "package_name": "com.example.authtest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANEnZDXAGzxbXH17YL0AcpvQ-8hNRm2qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
