@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,26 +25,43 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.authtest.ui.theme.AuthTestTheme
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SignInActivity : ComponentActivity() {
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
         enableEdgeToEdge()
         setContent {
             AuthTestTheme {
-                    Greeting2()
+                SignInScreen()
             }
         }
     }
 }
 
+fun login(email: String, password: String) {
+    val auth = Firebase.auth
+    auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                println("Login realizado com sucesso!")
+            } else {
+                println("Erro ao fazer login: ${task.exception?.message}")
+            }
+        }
+}
 
 @Composable
-fun Greeting2(modifier: Modifier = Modifier) {
+fun SignInScreen(modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     Column (
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(64.dp))
@@ -66,7 +84,7 @@ fun Greeting2(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {  }, modifier = Modifier.fillMaxWidth()){
+        Button(onClick = { login(email, password) }, modifier = Modifier.fillMaxWidth()){
             Text(text = "Entrar")
         }
     }
@@ -74,8 +92,8 @@ fun Greeting2(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview2() {
+fun SignInScreenPreview() {
     AuthTestTheme {
-        Greeting2()
+        SignInScreen()
     }
 }
