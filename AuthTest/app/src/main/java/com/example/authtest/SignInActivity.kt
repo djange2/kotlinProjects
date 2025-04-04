@@ -1,5 +1,6 @@
 package com.example.authtest
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.authtest.ui.theme.AuthTestTheme
@@ -43,12 +45,14 @@ class SignInActivity : ComponentActivity() {
     }
 }
 
-fun login(email: String, password: String) {
+fun login(email: String, password: String, context: android.content.Context) {
     val auth = Firebase.auth
     auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 println("Login realizado com sucesso!")
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
             } else {
                 println("Erro ao fazer login: ${task.exception?.message}")
             }
@@ -57,6 +61,7 @@ fun login(email: String, password: String) {
 
 @Composable
 fun SignInScreen(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     Column (
@@ -84,7 +89,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { login(email, password) }, modifier = Modifier.fillMaxWidth()){
+        Button(onClick = { login(email, password, context) }, modifier = Modifier.fillMaxWidth()){
             Text(text = "Entrar")
         }
     }

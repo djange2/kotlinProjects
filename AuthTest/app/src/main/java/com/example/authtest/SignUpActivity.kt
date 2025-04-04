@@ -1,5 +1,6 @@
 package com.example.authtest
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.authtest.ui.theme.AuthTestTheme
@@ -49,7 +51,8 @@ fun createAccount(
     email: String,
     password: String,
     rg: String,
-    cpf: String
+    cpf: String,
+    context: android.content.Context
 ){
     val auth = Firebase.auth
     val db = Firebase.firestore
@@ -76,6 +79,8 @@ fun createAccount(
                             println("Erro ao salvar dados: ${e.message}")
                         }
                 }
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
             } else {
                 println("Erro ao criar conta: ${task.exception?.message}")
             }
@@ -89,6 +94,7 @@ fun SignUpScreen(modifier: Modifier = Modifier) {
     var password by remember {mutableStateOf("")}
     var RG by remember {mutableStateOf("")}
     var CPF by remember {mutableStateOf("")}
+    val context = LocalContext.current
 
     Column (
         modifier = modifier.fillMaxSize(),
@@ -142,7 +148,7 @@ fun SignUpScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { createAccount(name, email, password, RG, CPF) }, modifier = Modifier.fillMaxWidth()){
+        Button(onClick = { createAccount(name, email, password, RG, CPF, context) }, modifier = Modifier.fillMaxWidth()){
             Text(text = "Criar")
         }
     }
